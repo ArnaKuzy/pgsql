@@ -17,3 +17,60 @@ SELECT * FROM session;
 ROLLBACK;
 
 COMMIT;
+
+
+
+
+
+
+-- Exemple 2
+
+CREATE SCHEMA transactions;
+
+CREATE TABLE transactions.users(
+    id BIGSERIAL PRIMARY KEY NOT NULL,
+    login VARCHAR(50) NOT NULL,
+    password VARCHAR(100)
+);
+
+INSERT INTO transactions.users(login, password)
+VALUES  ('john', 'mdp'),
+        ('Mich', '1234'),
+        ('Pierre', 'mdpsecret'),
+        ('Yves', 'tapez le mot de passe');
+
+-- Transaction raté
+SELECT * FROM transactions.users;
+
+BEGIN;
+
+UPDATE transactions.users SET password = 'plussecure';
+
+ROLLBACK;
+
+-- Transaction réussie
+BEGIN;
+UPDATE transactions.users SET password = 'plussecure' WHERE id = 2;
+
+COMMIT;
+
+-- Sauvegardes
+BEGIN;
+
+-- Bonne requête 
+UPDATE transactions.users SET password = 'plussecured' WHERE id = 3;
+
+-- Création d'un point de sauvegarde
+SAVEPOINT premierupdate;
+
+-- Mauvaise requête
+DELETE FROM transactions.users;
+
+-- Retour au point de sauvegarde
+ROLLBACK TO premierupdate;
+
+-- On refait la requête mais correct cette fois ci
+DELETE FROM transactions.users WHERE id = 1;
+
+-- Valide les changements
+COMMIT;
