@@ -1,25 +1,15 @@
+-- Création d'un type pour valider le format d'un email
 CREATE DOMAIN email_type AS VARCHAR
   CHECK ( value ~ '^[a-zA-Z0-9.!#$%&''*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$' );
 
-DROP DOMAIN uint;
+-- Création d'un type Unsigned Integer
 CREATE DOMAIN uint AS INTEGER CHECK (value > 0);
+
+-- Suppression du type
+DROP DOMAIN uint;
+
+-- Création d'un type Unsigned Integer sur 1 Octect
 CREATE DOMAIN uint1 AS INTEGER CHECK (value >= 0 AND value <= 255);
 
+-- Test
 INSERT INTO users(email, is_active, valuint) VALUES ('emadddiel@gmail.com', '1', 256);
-
-SELECT 
-   table_name, 
-   column_name, 
-   data_type
-FROM 
-   information_schema.columns
-WHERE 
-   table_name = 'users';
-
-      SELECT con.*
-       FROM pg_catalog.pg_constraint con
-            INNER JOIN pg_catalog.pg_class rel
-                       ON rel.oid = con.conrelid
-            INNER JOIN pg_catalog.pg_namespace nsp
-                       ON nsp.oid = connamespace
-       WHERE nsp.nspname = 'public';

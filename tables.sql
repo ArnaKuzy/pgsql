@@ -1,7 +1,7 @@
 
 DROP TABLE users;
 
--- votre commentaire
+-- Création d'une table 'users' si il n'existe pas déjà
 CREATE TABLE IF NOT EXISTS users (
     id BIGSERIAL PRIMARY KEY NOT NULL CHECK (id > 0),
     email email_type NOT NULL UNIQUE,
@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS users (
     is_active BOOLEAN NOT NULL
 );
 
+-- Ajout d'une colonne de type uint1
 ALTER TABLE users ADD COLUMN valuint uint1;
 
 DROP TABLE products;
