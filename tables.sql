@@ -4,10 +4,12 @@ DROP TABLE users;
 -- votre commentaire
 CREATE TABLE IF NOT EXISTS users (
     id BIGSERIAL PRIMARY KEY NOT NULL CHECK (id > 0),
-    email VARCHAR(50) NOT NULL UNIQUE,
+    email email_type NOT NULL UNIQUE,
     code_postal INTEGER CHECK (code_postal > 0),
     is_active BOOLEAN NOT NULL
 );
+
+ALTER TABLE users ADD COLUMN valuint uint1;
 
 DROP TABLE products;
 -- Table product
