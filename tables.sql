@@ -40,12 +40,10 @@ SELECT * FROM users;
 
 -- Tailles des types
 SELECT pg_column_size('75-001'::VARCHAR(5));
-
 SELECT pg_column_size('a'::CHAR(1));
 SELECT pg_column_size('abcdefg'::CHAR(1));
 SELECT pg_column_size('à'::CHAR(1));
 SELECT pg_column_size('か'::CHAR(1));
-
 SELECT pg_column_size(75001::INTEGER);
 
 -- Poids d'une table
